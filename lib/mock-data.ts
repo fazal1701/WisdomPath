@@ -686,7 +686,7 @@ export const mockConditions: Condition[] = [
         treatments: [
           {
             name: 'Sumatriptan (Imitrex)',
-            type: 'pharmaceutical',
+            type: 'drug',
             description: 'Triptan class drug to block pain pathways.',
             safetyLevel: 'caution',
             safetyNote: 'Do not use with SSRIs.',
@@ -694,7 +694,7 @@ export const mockConditions: Condition[] = [
           },
           {
             name: 'Ibuprofen',
-            type: 'pharmaceutical',
+            type: 'drug',
             description: 'NSAID for mild attacks.',
             safetyLevel: 'safe',
             safetyNote: 'Take with food.',
@@ -738,7 +738,7 @@ export const mockConditions: Condition[] = [
         treatments: [
           {
             name: 'Sertraline (Zoloft)',
-            type: 'pharmaceutical',
+            type: 'drug',
             description: 'SSRI to increase serotonin.',
             safetyLevel: 'risk',
             safetyNote: 'Monitor for side effects.',
