@@ -179,7 +179,7 @@ export function Navigation({ activeTab, onTabChange, onSelectContent, userName }
                       </div>
                     </div>
                     ))}
-                  }
+
                   {mockPractitioners
                     .filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.tradition.toLowerCase().includes(searchQuery.toLowerCase()))
                     .slice(0, 2)
