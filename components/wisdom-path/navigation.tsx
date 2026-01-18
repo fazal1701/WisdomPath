@@ -166,7 +166,10 @@ export function Navigation({ activeTab, onTabChange, onSelectContent, userName }
               {searchQuery && (
                 <div className="rounded-lg border border-border bg-background p-2">
                   {mockConditions
-                    .filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()))
+                    .filter(c =>
+                      c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                      c.approaches.some(a => a.treatments.some(t => t.name.toLowerCase().includes(searchQuery.toLowerCase())))
+                    )
                     .slice(0, 3)
                     .map(result => (
                       <div

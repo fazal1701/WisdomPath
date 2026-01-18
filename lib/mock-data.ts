@@ -672,6 +672,110 @@ export const mockConditions: Condition[] = [
       'Unexplained weight loss',
       'Severe abdominal pain'
     ]
+  },
+  {
+    id: 'cond-005',
+    name: 'Migraine & Chronic Headaches',
+    description: 'Severe, recurring headaches often accompanied by nausea and light sensitivity.',
+    approaches: [
+      {
+        tradition: 'western',
+        traditionName: 'Western Medicine',
+        diagnosis: 'Migraine with Aura',
+        approach: 'Abortive and preventive medication.',
+        treatments: [
+          {
+            name: 'Sumatriptan (Imitrex)',
+            type: 'pharmaceutical',
+            description: 'Triptan class drug to block pain pathways.',
+            safetyLevel: 'caution',
+            safetyNote: 'Do not use with SSRIs.',
+            imageUrl: '/images/western_pills_1768697895807.png',
+          },
+          {
+            name: 'Ibuprofen',
+            type: 'pharmaceutical',
+            description: 'NSAID for mild attacks.',
+            safetyLevel: 'safe',
+            safetyNote: 'Take with food.',
+          }
+        ],
+        evidenceLevel: 5,
+        evidenceType: 'Clinical Guidelines'
+      },
+      {
+        tradition: 'tcm',
+        traditionName: 'TCM',
+        diagnosis: 'Liver Yang Rising',
+        approach: 'Anchor Yang and nourish Yin.',
+        treatments: [
+          {
+            name: 'Acupuncture (Liver 3)',
+            type: 'therapy',
+            description: 'Points to descend energy from the head.',
+            safetyLevel: 'safe',
+            safetyNote: 'Safe.',
+            imageUrl: '/images/tcm_herbs_acupuncture_1768697856023.png',
+          }
+        ],
+        evidenceLevel: 3,
+        evidenceType: 'RCT'
+      }
+    ],
+    aiSynthesis: 'Combining acute relief (Western) with preventative stress management (TCM/Ayurveda) is highly effective.',
+    escalationTriggers: ['Sudden "worst headache of life"', 'Neurological deficits']
+  },
+  {
+    id: 'cond-006',
+    name: 'Mild Depression & Mood',
+    description: 'Persistent low mood, lack of energy, and sleep disturbance.',
+    approaches: [
+      {
+        tradition: 'western',
+        traditionName: 'Western Medicine',
+        diagnosis: 'Major Depressive Disorder',
+        approach: 'Neurotransmitter regulation.',
+        treatments: [
+          {
+            name: 'Sertraline (Zoloft)',
+            type: 'pharmaceutical',
+            description: 'SSRI to increase serotonin.',
+            safetyLevel: 'risk',
+            safetyNote: 'Monitor for side effects.',
+            imageUrl: '/images/western_medicine_1768697895807.png',
+          },
+          {
+            name: 'CBT Therapy',
+            type: 'therapy',
+            description: 'Cognitive Behavioral Therapy.',
+            safetyLevel: 'safe',
+            safetyNote: 'None.',
+          }
+        ],
+        evidenceLevel: 5,
+        evidenceType: 'Clinical Guidelines'
+      },
+      {
+        tradition: 'ayurveda',
+        traditionName: 'Ayurveda',
+        diagnosis: 'Kapha Depression',
+        approach: 'Stimulate movement and energy.',
+        treatments: [
+          {
+            name: 'Ashwagandha',
+            type: 'herb',
+            description: 'Adaptogen to stabilize mood and stress.',
+            safetyLevel: 'safe',
+            safetyNote: 'Avoid in hyperthyroid.',
+            imageUrl: '/images/ayurveda_spices_1768697869474.png',
+          }
+        ],
+        evidenceLevel: 4,
+        evidenceType: 'Scientific Studies'
+      }
+    ],
+    aiSynthesis: 'Holistic support including therapy and lifestyle changes is crucial alongside any medication.',
+    escalationTriggers: ['Suicidal ideation', 'Self-harm']
   }
 ];
 
