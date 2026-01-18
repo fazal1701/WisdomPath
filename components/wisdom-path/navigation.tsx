@@ -178,7 +178,7 @@ export function Navigation({ activeTab, onTabChange, onSelectContent, userName }
                         <p className="text-xs text-muted-foreground truncate">Condition • {result.approaches.length} Approaches</p>
                       </div>
                     </div>
-                    ))}
+                    )}
 
                   {mockPractitioners
                     .filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.tradition.toLowerCase().includes(searchQuery.toLowerCase()))
