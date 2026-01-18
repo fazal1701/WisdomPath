@@ -18,6 +18,7 @@ import {
   ChevronRight,
   LogOut,
   User,
+  ClipboardList,
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useState } from "react";
@@ -33,15 +34,14 @@ interface NavItem {
 }
 
 const navItems: NavItem[] = [
-  { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard className="h-5 w-5" /> },
-  { id: "explorer", label: "Wisdom Explorer", icon: <Compass className="h-5 w-5" /> },
-  { id: "journey", label: "Journey Tracker", icon: <TrendingUp className="h-5 w-5" /> },
-  { id: "safety", label: "Safety Center", icon: <Shield className="h-5 w-5" />, badge: 2 },
-  { id: "analytics", label: "Analytics", icon: <BarChart3 className="h-5 w-5" /> },
-  { id: "community", label: "Community", icon: <Users className="h-5 w-5" /> },
-  { id: "profile", label: "Profile", icon: <Settings className="h-5 w-5" /> }, // Screen 7
-  { id: "onboarding", label: "Assessment (Demo)", icon: <Search className="h-5 w-5" /> }, // Screen 10
-
+  { id: "dashboard", label: "Dashboard", icon: <LayoutDashboard className="h-5 w-5 text-blue-500" /> },
+  { id: "explorer", label: "Wisdom Explorer", icon: <Compass className="h-5 w-5 text-emerald-500" /> },
+  { id: "journey", label: "Journey Tracker", icon: <TrendingUp className="h-5 w-5 text-violet-500" /> },
+  { id: "safety", label: "Safety Center", icon: <Shield className="h-5 w-5 text-rose-500" />, badge: 2 },
+  { id: "analytics", label: "Analytics", icon: <BarChart3 className="h-5 w-5 text-indigo-500" /> },
+  { id: "community", label: "Community", icon: <Users className="h-5 w-5 text-amber-500" /> },
+  { id: "profile", label: "Profile", icon: <Settings className="h-5 w-5 text-slate-500" /> },
+  { id: "onboarding", label: "Assessment (Demo)", icon: <ClipboardList className="h-5 w-5 text-cyan-500" /> },
 ];
 
 interface NavigationProps {
