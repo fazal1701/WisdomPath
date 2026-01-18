@@ -62,10 +62,16 @@ const safetyConfig = {
 
 interface WisdomExplorerProps {
   className?: string;
+  initialSelectedId?: string | null;
 }
 
-export function WisdomExplorer({ className }: WisdomExplorerProps) {
-  const [searchQuery, setSearchQuery] = useState("Lower Back Pain");
+export function WisdomExplorer({ className, initialSelectedId }: WisdomExplorerProps) {
+  // Use React.useEffect to sync state if initialSelectedId changes
+  const initialCondition = initialSelectedId
+    ? mockConditions.find(c => c.id === initialSelectedId)
+    : null;
+
+  const [searchQuery, setSearchQuery] = useState(initialCondition?.name || "Lower Back Pain");
   const [selectedTraditions, setSelectedTraditions] = useState<MedicineTradition[]>([
     "tcm",
     "ayurveda",
@@ -102,6 +108,14 @@ export function WisdomExplorer({ className }: WisdomExplorerProps) {
       return matchTradition && matchEvidence && matchSafety;
     })
     : [];
+
+  const toggleTradition = (tradition: MedicineTradition) => {
+    if (selectedTraditions.includes(tradition)) {
+      setSelectedTraditions(selectedTraditions.filter((t) => t !== tradition));
+    } else {
+      setSelectedTraditions([...selectedTraditions, tradition]);
+    }
+  };
 
   const toggleFilter = (list: string[], setList: (l: string[]) => void, value: string) => {
     setList(list.includes(value) ? list.filter(item => item !== value) : [...list, value]);

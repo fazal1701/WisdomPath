@@ -47,13 +47,14 @@ const navItems: NavItem[] = [
 interface NavigationProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
+  onSelectContent?: (id: string, type: 'condition' | 'practitioner') => void;
   userName?: string | null;
   variant?: 'landing' | 'app';
 }
 
 import { mockConditions, mockPractitioners } from "@/lib/mock-data";
 
-export function Navigation({ activeTab, onTabChange, userName }: NavigationProps) {
+export function Navigation({ activeTab, onTabChange, onSelectContent, userName }: NavigationProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -73,127 +74,21 @@ export function Navigation({ activeTab, onTabChange, userName }: NavigationProps
             </span>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex lg:items-center lg:gap-1">
+          {/* Desktop Navigation - HIDDEN per user request for unified hamburger menu */}
+          <nav className="hidden">
             {navItems.map((item) => (
-              <button
-                type="button"
-                key={item.id}
-                onClick={() => onTabChange(item.id)}
-                className={cn(
-                  "relative flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
-                  activeTab === item.id
-                    ? "bg-primary/10 text-primary"
-                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
-                )}
-              >
-                {item.icon}
-                <span>{item.label}</span>
-                {item.badge && (
-                  <Badge
-                    variant="destructive"
-                    className="ml-1 h-5 min-w-5 rounded-full px-1.5 text-xs"
-                  >
-                    {item.badge}
-                  </Badge>
-                )}
-              </button>
+              // ... hidden
+              null
             ))}
           </nav>
 
           {/* Right Actions */}
           <div className="flex items-center gap-2">
             {/* Search */}
-            <div className="hidden md:block">
-              {searchOpen ? (
-                <div className="relative">
-                  <div className="flex items-center gap-2">
-                    <Input
-                      placeholder="Search conditions, herbs..."
-                      className="w-64"
-                      autoFocus
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      onBlur={() => setTimeout(() => setSearchOpen(false), 200)} // Delay to allow click
-                    />
-                  </div>
-                  {searchQuery && (
-                    <div className="absolute top-full right-0 mt-2 w-80 rounded-xl border border-border bg-card p-2 shadow-lg animate-in fade-in zoom-in-95 z-50">
-                      {mockConditions
-                        .filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()) || c.approaches.some(a => a.treatments.some(t => t.name.toLowerCase().includes(searchQuery.toLowerCase()))))
-                        .slice(0, 3)
-                        .map(result => (
-                          <div
-                            key={result.id}
-                            className="flex items-center gap-3 p-2 hover:bg-muted rounded-lg cursor-pointer transition-colors"
-                            onClick={() => {
-                              onTabChange('explorer');
-                              setSearchQuery(''); // Clear search
-                              setSearchOpen(false);
-                            }}
-                          >
-                            <div className="h-10 w-10 overflow-hidden rounded-md bg-muted">
-                              {result.approaches[0]?.treatments[0]?.imageUrl && (
-                                <img
-                                  src={result.approaches[0].treatments[0].imageUrl}
-                                  alt={result.name}
-                                  className="h-full w-full object-cover"
-                                />
-                              )}
-                            </div>
-                            <div>
-                              <p className="text-sm font-medium text-foreground">{result.name}</p>
-                              <p className="text-xs text-muted-foreground truncate">Condition • {result.approaches.length} Approaches</p>
-                            </div>
-                          </div>
-                        ))
-                      }
-                      {mockPractitioners
-                        .filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.tradition.toLowerCase().includes(searchQuery.toLowerCase()))
-                        .slice(0, 2)
-                        .map(practitioner => (
-                          <div
-                            key={practitioner.id}
-                            className="flex items-center gap-3 p-2 hover:bg-muted rounded-lg cursor-pointer transition-colors"
-                            onClick={() => {
-                              onTabChange('community');
-                              setSearchQuery('');
-                              setSearchOpen(false);
-                            }}
-                          >
-                            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-                              <User className="h-5 w-5" />
-                            </div>
-                            <div>
-                              <p className="text-sm font-medium text-foreground">{practitioner.name}</p>
-                              <p className="text-xs text-muted-foreground capitalize">{practitioner.tradition} Practitioner</p>
-                            </div>
-                          </div>
-                        ))
-                      }
-                      {mockConditions.filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase())).length === 0 &&
-                        mockPractitioners.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase())).length === 0 && (
-                          <div className="p-4 text-center text-sm text-muted-foreground">
-                            No results found.
-                          </div>
-                        )}
-                    </div>
-                  )}
-                </div>
-              ) : (
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setSearchOpen(true)}
-                  className="text-muted-foreground"
-                >
-                  <Search className="h-5 w-5" />
-                </Button>
-              )}
-            </div>
+            {/* ... */}
 
             {/* Notifications */}
-            <Button variant="ghost" size="icon" className="relative text-muted-foreground">
+            <Button variant="ghost" size="icon" className="relative text-muted-foreground hidden md:flex">
               <Bell className="h-5 w-5" />
               <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-destructive" />
             </Button>
@@ -232,11 +127,11 @@ export function Navigation({ activeTab, onTabChange, userName }: NavigationProps
               </div>
             )}
 
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button - ALWAYS VISIBLE */}
             <Button
               variant="ghost"
               size="icon"
-              className="lg:hidden"
+              className="ml-2"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
@@ -244,9 +139,9 @@ export function Navigation({ activeTab, onTabChange, userName }: NavigationProps
           </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* Mobile Navigation - Shown when open (removed lg:hidden) */}
         {mobileMenuOpen && (
-          <div className="border-t border-border bg-card p-4 lg:hidden">
+          <div className="border-t border-border bg-card p-4">
             <div className="mb-4 space-y-2">
               <Input
                 placeholder="Search conditions, herbs..."
@@ -259,29 +154,55 @@ export function Navigation({ activeTab, onTabChange, userName }: NavigationProps
                   {mockConditions
                     .filter(c => c.name.toLowerCase().includes(searchQuery.toLowerCase()))
                     .slice(0, 3)
-                    .map(result => (
-                      <div
-                        key={result.id}
-                        className="flex items-center gap-3 p-2 hover:bg-muted rounded-lg cursor-pointer"
-                        onClick={() => {
-                          onTabChange('explorer');
-                          setSearchQuery('');
-                          setMobileMenuOpen(false);
-                        }}
-                      >
-                        <div className="h-8 w-8 overflow-hidden rounded-md bg-muted">
-                          {result.approaches[0]?.treatments[0]?.imageUrl && (
-                            <img
-                              src={result.approaches[0].treatments[0].imageUrl}
-                              alt={result.name}
-                              className="h-full w-full object-cover"
-                            />
-                          )}
-                        </div>
-                        <span className="text-sm font-medium">{result.name}</span>
+                    .map(result => <div
+                      key={result.id}
+                      className="flex items-center gap-3 p-2 hover:bg-muted rounded-lg cursor-pointer transition-colors"
+                      onClick={() => {
+                        onTabChange('explorer');
+                        onSelectContent?.(result.id, 'condition');
+                        setSearchQuery(''); // Clear search
+                        setMobileMenuOpen(false);
+                      }}
+                    >
+                      <div className="h-10 w-10 overflow-hidden rounded-md bg-muted">
+                        {result.approaches[0]?.treatments[0]?.imageUrl && (
+                          <img
+                            src={result.approaches[0].treatments[0].imageUrl}
+                            alt={result.name}
+                            className="h-full w-full object-cover"
+                          />
+                        )}
                       </div>
-                    ))
+                      <div>
+                        <p className="text-sm font-medium text-foreground">{result.name}</p>
+                        <p className="text-xs text-muted-foreground truncate">Condition • {result.approaches.length} Approaches</p>
+                      </div>
+                    </div>
+                    ))}
                   }
+                  {mockPractitioners
+                    .filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase()) || p.tradition.toLowerCase().includes(searchQuery.toLowerCase()))
+                    .slice(0, 2)
+                    .map(practitioner => (
+                      <div
+                        key={practitioner.id}
+                        className="flex items-center gap-3 p-2 hover:bg-muted rounded-lg cursor-pointer transition-colors"
+                        onClick={() => {
+                          onTabChange('community');
+                          onSelectContent?.(practitioner.id, 'practitioner');
+                          setSearchQuery('');
+                          setSearchOpen(false);
+                        }}
+                      >   <Avatar className="h-10 w-10">
+                          <AvatarImage src={practitioner.imageUrl} alt={practitioner.name} className="object-cover" />
+                          <AvatarFallback className="bg-primary/10 text-primary">{practitioner.name.charAt(0)}</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <p className="text-sm font-medium text-foreground">{practitioner.name}</p>
+                          <p className="text-xs text-muted-foreground truncate">Practitioner • {practitioner.tradition}</p>
+                        </div>
+                      </div>
+                    ))}
                 </div>
               )}
             </div>

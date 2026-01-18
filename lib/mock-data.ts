@@ -587,6 +587,91 @@ export const mockConditions: Condition[] = [
       'falling asleep while driving',
       'Chronic insomnia > 3 months'
     ]
+  },
+  {
+    id: 'cond-004',
+    name: 'Digestive Health (IBS/Bloating)',
+    description: 'Chronic bloating, irregular digestion, and discomfort.',
+    approaches: [
+      {
+        tradition: 'ayurveda',
+        traditionName: 'Ayurveda',
+        diagnosis: 'Agni Mandya (Weak Digestive Fire)',
+        approach: 'Reset digestive fire with spices.',
+        treatments: [
+          {
+            name: 'CCF Tea',
+            type: 'diet',
+            description: 'Cumin, Coriander, Fennel tea to aid digestion.',
+            safetyLevel: 'safe',
+            safetyNote: 'Safe for daily use.',
+            imageUrl: '/images/ayurveda_spices_1768697869474.png',
+          }
+        ],
+        evidenceLevel: 5,
+        evidenceType: 'Traditional Practice'
+      },
+      {
+        tradition: 'tcm',
+        traditionName: 'Traditional Chinese Medicine',
+        diagnosis: 'Spleen Qi Deficiency',
+        approach: 'Tonify Spleen and remove dampness.',
+        treatments: [
+          {
+            name: 'Acupuncture (Stomach 36)',
+            type: 'therapy',
+            description: 'Zusanli point to strengthen digestion and immunity.',
+            safetyLevel: 'safe',
+            safetyNote: 'Professional administration.',
+            imageUrl: '/images/tcm_herbs_acupuncture_1768697856023.png',
+          }
+        ],
+        evidenceLevel: 3,
+        evidenceType: 'RCT'
+      },
+      {
+        tradition: 'western',
+        traditionName: 'Western Medicine',
+        diagnosis: 'Irritable Bowel Syndrome',
+        approach: 'Dietary modification (FODMAP) and stress reduction.',
+        treatments: [
+          {
+            name: 'Low FODMAP Diet',
+            type: 'diet',
+            description: 'Elimination of fermentable carbs.',
+            safetyLevel: 'safe',
+            safetyNote: 'Consult dietitian for long term.',
+            imageUrl: '/images/western_medicine_1768697895807.png',
+          }
+        ],
+        evidenceLevel: 5,
+        evidenceType: 'Clinical Guidelines'
+      },
+      {
+        tradition: 'unani',
+        traditionName: 'Unani Medicine',
+        diagnosis: 'Zuoful Meda',
+        approach: 'Strengthening the stomach.',
+        treatments: [
+          {
+            name: 'Cupping Therapy (Hijama)',
+            type: 'therapy',
+            description: 'Dry cupping on abdomen to stimulate blood flow.',
+            safetyLevel: 'caution',
+            safetyNote: 'Professional administration only.',
+            imageUrl: '/images/unani_cupping_1768695984438.png',
+          }
+        ],
+        evidenceLevel: 4,
+        evidenceType: 'Historical Text'
+      }
+    ],
+    aiSynthesis: 'A multi-modal approach focusing on restoring digestive rhythm (Ayurveda) and identifying dietary triggers (Western) offers the best long-term relief.',
+    escalationTriggers: [
+      'Blood in stool',
+      'Unexplained weight loss',
+      'Severe abdominal pain'
+    ]
   }
 ];
 
@@ -652,81 +737,62 @@ export const mockAnalytics = {
 export interface Practitioner {
   id: string;
   name: string;
-  title: string;
-  tradition: MedicineTradition;
+  specialty: string;
   location: string;
   rating: number;
-  verified: boolean;
-  specialties: string[];
-  consultationType: 'online' | 'in-person' | 'hybrid';
+  reviews: number;
+  availability: string;
+  tags: string[];
+  tradition: MedicineTradition;
+  imageUrl?: string;
 }
 
 export const mockPractitioners: Practitioner[] = [
   {
     id: 'prac-001',
-    name: 'Dr. Ananya Sharma',
-    title: 'BAMS, MD (Ayurveda)',
-    tradition: 'ayurveda',
-    location: 'New Delhi / Online',
+    name: 'Dr. Sarah Chen',
+    specialty: 'Acupuncture & Herbal Medicine',
+    location: 'San Francisco, CA',
     rating: 4.9,
-    verified: true,
-    specialties: ['Panchakarma', 'Women\'s Health', 'Chronic Pain'],
-    consultationType: 'hybrid',
+    reviews: 124,
+    availability: 'Available Today',
+    tags: ['Pain Management', 'Fertility', 'Anxiety'],
+    tradition: 'tcm',
+    imageUrl: '/images/practitioner_sarah.jpg'
   },
   {
     id: 'prac-002',
-    name: 'Li Wei',
-    title: 'L.Ac, OMD',
-    tradition: 'tcm',
-    location: 'San Francisco, CA',
+    name: 'Dr. Raj Patel',
+    specialty: 'Ayurvedic Physician',
+    location: 'New York, NY',
     rating: 4.8,
-    verified: true,
-    specialties: ['Acupuncture', 'Herbal Medicine', 'Fertility'],
-    consultationType: 'in-person',
+    reviews: 98,
+    availability: 'Next Week',
+    tags: ['Diet & Nutrition', 'Panchakarma', 'Skin Health'],
+    tradition: 'ayurveda',
+    imageUrl: '/images/practitioner_raj.jpg'
   },
   {
     id: 'prac-003',
-    name: 'Hakim Abdullah',
-    title: 'Unani Tibb Practitioner',
-    tradition: 'unani',
-    location: 'London, UK / Online',
-    rating: 4.7,
-    verified: true,
-    specialties: ['Digestive Disorders', 'Skin Conditions'],
-    consultationType: 'online',
+    name: 'Elena Rostova',
+    specialty: 'Unani Hakim',
+    location: 'London, UK',
+    rating: 4.9,
+    reviews: 45,
+    availability: 'Available Tomorrow',
+    tags: ['Cupping Therapy', 'Herbal Tonics'],
+    tradition: 'unani'
   },
   {
     id: 'prac-004',
-    name: 'Dr. Sarah Jenkins',
-    title: 'DPT, Integrative Health Coach',
-    tradition: 'western',
-    location: 'Austin, TX',
-    rating: 4.9,
-    verified: true,
-    specialties: ['Physical Therapy', 'Functional Movement'],
-    consultationType: 'in-person',
-  },
-  {
-    id: 'prac-005',
-    name: 'Elena Rostova',
-    title: 'Clinical Herbalist',
-    tradition: 'western',
-    location: 'Portland, OR / Online',
-    rating: 4.8,
-    verified: true,
-    specialties: ['Digestive Health', 'Stress Management'],
-    consultationType: 'online',
-  },
-  {
-    id: 'prac-006',
     name: 'Dr. Aarav Patel',
-    title: 'MD, Homeopath',
-    tradition: 'ayurveda',
+    specialty: 'Ayurvedic Specialist',
     location: 'Mumbai, India',
-    rating: 4.6,
-    verified: true,
-    specialties: ['Respiratory Health', 'Allergies'],
-    consultationType: 'hybrid',
+    rating: 4.7,
+    reviews: 200,
+    availability: 'Available Today',
+    tags: ['Digestive Health', 'Stress Management'],
+    tradition: 'ayurveda'
   }
 ];
 

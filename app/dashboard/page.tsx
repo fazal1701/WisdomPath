@@ -25,11 +25,17 @@ import { Flame, Award } from "lucide-react";
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [showPractice, setShowPractice] = useState(false);
+  const [selectedContentId, setSelectedContentId] = useState<string | null>(null);
 
   // Quick navigation handler from Navigation component
   const handleTabChange = (tab: string) => {
     setActiveTab(tab);
     window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleSelectContent = (id: string, type: 'condition' | 'practitioner') => {
+    setSelectedContentId(id);
+    // You could handle 'practitioner' type if expanding Community features later
   };
 
   // Render the correct screen based on state
@@ -107,14 +113,14 @@ export default function DashboardPage() {
               {/* Column 2: Interventions */}
               <div className="h-full">
                 <InterventionPyramid
-                  onInterventionClick={() => setActiveTab('intervention-detail')}
+                // onInterventionClick={() => setActiveTab('intervention-detail')} 
                 />
               </div>
 
               {/* Column 3: Safety */}
               <div className="h-full">
                 <SafetyStatusWidget
-                  onViewSafety={() => setActiveTab('safety')}
+                // onViewSafety={() => setActiveTab('safety')}
                 />
               </div>
             </div>
@@ -124,7 +130,7 @@ export default function DashboardPage() {
           </div>
         );
       case "explorer":
-        return <WisdomExplorer />;
+        return <WisdomExplorer initialSelectedId={selectedContentId} />;
       case "journey":
         return <JourneyTracker />;
       case "safety":
@@ -151,6 +157,7 @@ export default function DashboardPage() {
         <Navigation
           activeTab={activeTab}
           onTabChange={handleTabChange}
+          onSelectContent={handleSelectContent}
           userName={mockUser.name}
         />
       )}
